@@ -20,7 +20,12 @@ class HistoryController {
         let Io = req.Io;
         let { assets, assetCreated, user } = req.assets;
         History.create({assets, createdAt: assetCreated, user})
-            .then(newHis => res.status(200).json(newHis))
+            .then(newHis => {
+                let check = req.createCheck;
+                if (!check) {
+                    res.status(200).json(newHis)
+                }
+            })
     };
 
 

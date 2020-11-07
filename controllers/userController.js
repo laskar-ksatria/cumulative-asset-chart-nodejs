@@ -44,7 +44,8 @@ class UserController {
                     assetCreated: createdDate,
                     user: user.id
                 }
-                res.status(200).json({message: `${username} has been registered`})
+                res.status(200).json({message: `${username} has been registered`});
+                req.createCheck = true;
                 next();
             })
             .catch(next)
