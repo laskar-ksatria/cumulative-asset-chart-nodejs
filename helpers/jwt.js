@@ -6,7 +6,7 @@ const generateToken = (payload) => {
 };
 
 const verifyToken = (token) => {
-    return jwt.verify(token);
+    return jwt.verify(token, SECRET_CODE);
 };
 
 module.exports = { generateToken, verifyToken };

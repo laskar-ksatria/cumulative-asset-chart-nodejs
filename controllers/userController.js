@@ -1,12 +1,12 @@
 const User = require('../models/user');
 const { generateToken } = require('../helpers/jwt');
 
+
 class UserController {
 
     static read(req,res,next) {
         User.find({})
             .then(users => res.status(200).json(users))
-            .catch(next)
     };
 
     static readMe(req,res,next) {
@@ -38,7 +38,14 @@ class UserController {
 
         User.create({username, password})
             .then(user => {
+                let createdDate = new Date();
+                req.assets = {
+                    assets: 0,
+                    assetCreated: createdDate,
+                    user: user.id
+                }
                 res.status(200).json({message: `${username} has been registered`})
+                next();
             })
             .catch(next)
     };
@@ -47,3 +54,4 @@ class UserController {
 };
 
 module.exports = UserController;
+

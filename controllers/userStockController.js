@@ -1,4 +1,5 @@
 const UserStock = require('../models/userStock');
+const History = require('../models/transactionHistory');
 
 class UserStockController {
 
@@ -15,8 +16,31 @@ class UserStockController {
             .catch(next)
     };
 
-    static create(req,res,next) {
-        let { company, amount, user } = req.body;
+    static async create(req,res,next) {
+        let user = req.decoded.id;
+        let { company, amount, price, order_type } = req.body;
+        try {
+            let totalStock = Number(amount) * Number(price);
+            let { total } = await UserStock.create({company, amount, user, price, order_type, total: totalStock})
+            let message = "Stock already buy"
+            if (order_type === 'sell') {
+                total = 0 - total
+                message = "Stock already sell"
+            }
+            let lastHistory = await History.find({user})
+            
+            let myAllAssets = lastHistory[lastHistory.length - 1];
+            let newAssets;
+            newAssets = myAllAssets.assets + total;
+            req.assets = {
+                assets: newAssets,
+                assetCreated: new Date(),
+                user    
+            }
+            next();
+        } catch (error) {
+            next(error)
+        }
     };
 
 };

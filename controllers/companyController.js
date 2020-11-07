@@ -18,8 +18,8 @@ class CompanyController {
     };
 
     static create(req,res,next) {
-        let { name, stocks } = req.body;
-        Company.create({name, stocks})
+        let { name } = req.body;
+        Company.create({name})
             .then(company => res.status(200).json(company))
             .catch(next)
     };

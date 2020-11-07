@@ -16,6 +16,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 //Main route
+app.use((req,res,next) => {
+    req.Io = Io;
+    next();
+})
 app.use(require('./routes'));
 
 server.listen(PORT, () => console.log(`Server listening on ${PORT}`));

@@ -9,6 +9,18 @@ const userStockSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Stock amount cannot be empty"]
     },
+    price: {
+        type: Number,
+        required: [true, "Price cannot be empty"]
+    },
+    order_type: {
+        type: String,
+        required: [true, "Order type cannot be empty"]
+    },
+    total: {
+        type: Number,
+        required: [true, "Total cannot be empty"]
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
